@@ -12,13 +12,13 @@ import {
 import * as ActionTypes from '../Redux/ActionTypes';
 import * as UserSaga from './User';
 
-export function* range(start = 1, stop = 5) {
-  for (var i = start; i < stop; i++)
-    yield i;
+export function* range() {
+  console.log(222);
+  yield '111';
 }
 
-// export default function* rootSaga() {
-//   yield all([
-//     // takeLatest(ActionTypes.LOGIN, range),
-//   ]);
-// };
+export default function* rootSaga() {
+  yield all([
+    takeLatest(ActionTypes.LOGIN, range),
+  ]);
+}

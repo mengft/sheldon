@@ -12,7 +12,7 @@ import {
   tabFriendReducer,
   tabPersonalCenterReducer,
 } from './NavigationReducers';
-import { range } from '../Sagas';
+import rootSaga from '../Sagas';
 
 const sagaMiddleware = createSagaMiddleware();
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -35,7 +35,6 @@ export default function configureStore() {
     enhancer,
   );
 
-  sagaMiddleware.run(range);
-
+  sagaMiddleware.run(rootSaga);
   return store;
 }
