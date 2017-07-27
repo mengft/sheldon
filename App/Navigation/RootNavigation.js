@@ -11,8 +11,8 @@ import { ApplicationStyles } from '../Themes';
 
 export const RootNavigator = StackNavigator(
   {
-    login: { screen: LoginScreen },
     mainTab: { screen: MainTabNavigation },
+    login: { screen: LoginScreen },
   },
   {
     navigationOptions: {

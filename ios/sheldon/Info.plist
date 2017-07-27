@@ -51,8 +51,18 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>LSApplicationCategoryType</key>
+	<string/>
+	<key>ATSApplicationFontsPath</key>
+	<string/>
+	<key>NSHumanReadableCopyright</key>
+	<string/>
+	<key>CFBundleGetInfoString</key>
+	<string/>
 	<key>UIAppFonts</key>
 	<array>
+		<string>iconfont.ttf</string>
+		<string>dinmedium.ttf</string>
 		<string>Entypo.ttf</string>
 		<string>EvilIcons.ttf</string>
 		<string>FontAwesome.ttf</string>

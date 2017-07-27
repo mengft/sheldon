@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { toggleTabBarAction } from '../../Redux/Actions';
 import connectWithNavigationIsFocused from '../../Utils/NavigationIsFocused';
 import { Colors, Metrics, ApplicationStyles, px2dp } from '../../Themes';
-import HeaderLeft from '../../Components/HeaderLeft';
+import { HeaderLeft } from '../../Components';
 
 class PersonalCenterItemScreen extends Component {
 
