@@ -59,7 +59,7 @@ export default class DiaryBoard extends Component {
               }}
             >
               <Text style={{ fontSize: px2dp(32), color: Colors.C8 }}>
-                最近一{area}消费
+                今{area}消费
               </Text>
               {number !== 0 && <Text
                 style={{
@@ -68,7 +68,7 @@ export default class DiaryBoard extends Component {
                   marginTop: px2dp(18),
                 }}
               >
-                上一次单周消费： {day}
+                本月消费： {day} ¥
               </Text>
               }
             </View>

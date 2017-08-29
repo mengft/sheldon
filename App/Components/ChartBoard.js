@@ -68,6 +68,7 @@ export default class ChartBoard extends Component {
   render() {
     const { unitW, width, height } = this.state;
     const { data, style, onPress, title, day } = this.props;
+    console.log(data);
     return (
       <TouchableOpacity activeOpacity={0.8} onPress={onPress}>
         <View
@@ -79,7 +80,7 @@ export default class ChartBoard extends Component {
         >
           <Svg width={width} height={height}>
             <SvgText fill="#fff" y={10} x={10} fontSize={16}>{title}</SvgText>
-            <SvgText fill="#fff" y={30} x={10} fontSize={11}>¥</SvgText>
+            <SvgText fill="#fff" y={30} x={10} fontSize={11}></SvgText>
             <SvgText fill="#fff" y={30} x={width - 10} fontSize={11} textAnchor="end">{day}</SvgText>
             <G translate={`0,${this.marginTop}`}>
               <Line
@@ -94,7 +95,7 @@ export default class ChartBoard extends Component {
             <G translate={`${unitW / 2},${this.marginTop}`}>
               {data.map((d, i) => (
                 <G
-                  key={i}
+                  key={d.time}
                   translate={`${unitW * i},${height - this.marginTop - this.marginBottom}`}
                 >
                   <Path d={this.arc()} fill="#fff" />
@@ -107,7 +108,7 @@ export default class ChartBoard extends Component {
                 </G>
               ))}
               {
-                data.map((v, i) => (v.value ? <G key={v.time} key={v.type}><Circle
+                data.map((v, i) => (v.value ? <G key={v.time} key={v.time}><Circle
                   r="5"
                   cx={i * unitW}
                   cy={this.ylinear(v.value)}

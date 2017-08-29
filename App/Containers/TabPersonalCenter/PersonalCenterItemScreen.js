@@ -15,8 +15,8 @@ class PersonalCenterItemScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: '我的-二级界面',
     tabBarVisible: true,
-    headerLeft: <HeaderLeft navigation={navigation} color={Colors.CB} />,
     ...ApplicationStyles.defaultHeaderStyle,
+    headerLeft: <HeaderLeft navigation={navigation} color={Colors.CB} />,
   });
 
 

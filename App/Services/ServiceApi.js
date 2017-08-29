@@ -1,77 +1,99 @@
-import qs from 'qs';
-import Config from '../Config';
+import qs from 'qs'
 
-function myfetch({ url, data, method = 'POST', headers = {}, dataType }) {
-  if (!url) {
-    throw new Error('url is not defined!');
+function BinaryFormatData ({ data, fileId = 'upload', filename = '' }) { // 二进制走这个format函数
+  const formData = new FormData()
+  if (data && Object.keys(data).length) {
+    for (let key in data) {
+      formData.append(key, data[key])
+    }
   }
-  let fullUrl = url.indexOf('http') === 0
-    ? url
-    : url.indexOf('/') === 0 ? `${Config.host}${url}` : `${Config.host}/${url}`;
+  // 如果需要上传文件
+  filename && formData.append(fileId, {uri: filename, name: filename})
+  return formData
+}
+
+function myfetch ({ url, data, method = 'POST', headers = {}, dataType, filename, fileId }) {
+  if (!url) {
+    throw new Error('url is not defined!')
+  }
   let options = {
     method: method.toUpperCase(),
     headers: {
       ...headers,
       // 'Content-Encoding': 'gzip',
-      'Cache-Control': 'no-cache',
-    },
-  };
-  if (options.method === 'GET' || options.method === 'PUT') {
-    fullUrl += `?${qs.stringify(data)}`;
-  } else {
-    options = {
-      ...options,
-      body: qs.stringify(data),
-      headers: {
-        ...options.headers,
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-    };
+      'Cache-Control': 'no-cache'
+    }
   }
-  if (dataType === 'json') {
+  console.log(fullUrl)
+  if (filename) {
     options = {
       ...options,
-      body: JSON.stringify(data),
+      body: BinaryFormatData({data, filename, fileId}),
       headers: {
         ...options.headers,
-        'Content-Type': 'application/json',
-      },
-    };
+        'Content-Type': 'multipart/form-data'
+      }
+    }
+  } else {
+    if (options.method === 'GET' || options.method === 'PUT') {
+      fullUrl += `?${qs.stringify(data)}`
+    } else {
+      options = {
+        ...options,
+        body: qs.stringify(data),
+        headers: {
+          ...options.headers,
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }
+    }
+    if (dataType === 'json') {
+      options = {
+        ...options,
+        body: JSON.stringify(data),
+        headers: {
+          ...options.headers,
+          'Content-Type': 'application/json'
+        }
+      }
+    }
   }
   const p = Promise.race([
     fetch(fullUrl, options),
-    new Promise((resolv, reject) => {
-      setTimeout(() => reject(new Error('网络加载超时')), 5000);
-    }),
-  ]);
+    new Promise((resolve, reject) => {
+      setTimeout(() => reject(new Error('网络加载超时')), 20000)
+    })
+  ])
   return p.then((response) => {
     if (response.status === 401 || response.status === 400) {
-      throw new Error(response.status);
+      throw new Error(response.status)
     } else if (
       (response.status > 299 || response.status < 200) &&
       response.status !== 304
     ) {
-      throw new Error('服务繁忙，请稍后再试');
+      throw new Error('服务繁忙，请稍后再试')
     }
-    return response.json();
+    console.log(response)
+    return response.json()
   })
   .then((json) => {
+    console.log(json)
     if (json.status) {
-      const { code, userMessage } = json.status;
+      const { code, userMessage } = json.status
       if (code !== '000000') {
-        throw new Error(code + userMessage);
+        throw new Error(userMessage)
       }
     }
-    console.log(json)
-    return { response: json };
+    return { response: json }
   })
-  .catch(error => ({ error }));
+  .catch((error) => {
+    if (error && error.message === 'Network request failed') {
+      return { error: { message: '网络不可用，请检查您的网络' } }
+    }
+    return { error }
+  })
 }
 
 export default {
-  fetch: myfetch,
-  getAddressMetadata: () =>
-    new Promise((resolve, reject) => {
-      setTimeout(() => resolve(require('../Fixtures/city.json')), 100);
-    }),
-};
+  fetch: myfetch
+}
