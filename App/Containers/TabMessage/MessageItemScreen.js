@@ -15,8 +15,8 @@ class MessageItemScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: '消息-二级界面',
     tabBarVisible: true,
-    headerLeft: <HeaderLeft navigation={navigation} color={Colors.CB} />,
     ...ApplicationStyles.defaultHeaderStyle,
+    headerLeft: <HeaderLeft navigation={navigation} color={Colors.CB} />,
   });
 
 

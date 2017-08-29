@@ -15,10 +15,9 @@ class FriendItemScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: '萌友-二级界面',
     tabBarVisible: true,
-    headerLeft: <HeaderLeft navigation={navigation} color={Colors.CB} />,
     ...ApplicationStyles.defaultHeaderStyle,
+    headerLeft: <HeaderLeft navigation={navigation} color={Colors.CB} />,
   });
-
 
   componentWillReceiveProps(nextProps) {
     if (!this.props.isFocused && nextProps.isFocused) {

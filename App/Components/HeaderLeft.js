@@ -1,9 +1,9 @@
 import React from 'react';
 import { TouchableOpacity, Text } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from '../Fonts/iconfont';
 import Colors from '../Themes/Colors';
 
-const HeaderLeft = ({ navigation, color, onPress, iconName = 'arrows', text, textStyle, iconStyle, }) => {
+const HeaderLeft = ({ navigation, color, onPress, iconName = 'back', text, textStyle, iconStyle, }) => {
   let onPressFunc;
   if (onPress) {
     onPressFunc = () => onPress(navigation);
